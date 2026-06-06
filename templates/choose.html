@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+
+{% block title %}Choose Mode{% endblock %}
+
+{% block main %}
+<div class="row justify-content-center mt-5">
+    <div class="col-md-10">
+        <h2 class="text-center text-danger mb-5">Select Effect Mode</h2>
+
+        <div class="row">
+            <!-- SLOW Button -->
+            <div class="col-md-6 mb-4">
+                <a href="/edit?mode=slow" class="text-decoration-none">
+                    <div class="card h-100 border-0 shadow-lg hover-card slow-card">
+                        <div class="card-body text-center py-5">
+                            <h1 class="display-1 slow-text mb-3">SLOW</h1>
+                            <p class="text-secondary">Deep, atmospheric, chilled</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- SPEED Button -->
+            <div class="col-md-6 mb-4">
+                <a href="/edit?mode=speed" class="text-decoration-none">
+                    <div class="card h-100 border-0 shadow-lg hover-card speed-card">
+                        <div class="card-body text-center py-5">
+                            <h1 class="display-1 speed-text mb-3">SPEED</h1>
+                            <p class="text-secondary">Fast, energetic, hype</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

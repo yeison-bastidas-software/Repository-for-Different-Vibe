@@ -1,0 +1,77 @@
+{% extends "layout.html" %}
+
+{% block title %}Edit{% endblock %}
+
+{% block main %}
+<div class="row justify-content-center mt-5">
+    <div class="col-md-8">
+        <h2 class="text-center text-danger mb-4">
+            {% if mode == 'slow' %}SLOW MODE{% else %}SPEED MODE{% endif %}
+        </h2>
+
+        <div class="card border-0 shadow p-4 mb-4">
+            <label class="form-label text-secondary mb-3">
+                Intensity: <span id="intensity-val" class="text-danger fw-bold">0</span>%
+            </label>
+
+            <input type="range" class="form-range" id="intensity" min="0" max="100" value="0">
+
+            <input type="hidden" id="mode-value" value="{{ mode }}">
+            <input type="hidden" id="file-size" value="{{ file_size_mb }}">
+
+            <div class="text-center mt-4">
+                <button onclick="processAudio()" class="btn btn-lg px-5 {% if mode == 'slow' %}btn-slow{% else %}btn-speed{% endif %}">
+                    Process Audio
+                </button>
+            </div>
+        </div>
+
+        <div id="progress-container" class="d-none">
+            <div class="progress" style="height: 30px;">
+                <div id="progress-bar" class="progress-bar {% if mode == 'slow' %}bg-slow{% else %}bg-speed{% endif %}" role="progressbar" style="width: 0%"></div>
+            </div>
+            <p class="text-center text-secondary mt-2">Processing... <span id="progress-text">0%</span></p>
+        </div>
+    </div>
+</div>
+
+<script>
+    function processAudio() {
+        const intensity = document.getElementById('intensity').value;
+        // Read directly from the hidden input
+        const mode = document.getElementById('mode-value').value;
+
+        const progressContainer = document.getElementById('progress-container');
+        const progressBar = document.getElementById('progress-bar');
+        const progressText = document.getElementById('progress-text');
+
+        const fileSizeMb = parseFloat(document.getElementById('file-size').value) || 1;
+        const estimatedDurationMs = Math.max(2000, fileSizeMb * 1500);
+        const intervalTime = 50;
+        const steps = estimatedDurationMs / intervalTime;
+        const increment = 100 / steps;
+
+        if (!progressContainer || !progressBar || !progressText) return;
+
+        progressContainer.classList.remove('d-none');
+        let progress = 0;
+
+        const interval = setInterval(() => {
+            progress += increment;
+            if (progress >= 100) {
+                progress = 100;
+                clearInterval(interval);
+                progressBar.style.width = '100%';
+                progressText.textContent = '100%';
+                setTimeout(() => {
+                    // Redirect with the CORRECT mode
+                    window.location.href = `/process?mode=${mode}&intensity=${intensity}`;
+                }, 500);
+            } else {
+                progressBar.style.width = `${progress}%`;
+                progressText.textContent = `${Math.floor(progress)}%`;
+            }
+        }, intervalTime);
+    }
+</script>
+{% endblock %}

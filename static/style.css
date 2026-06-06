@@ -1,0 +1,140 @@
+/* Main colors */
+:root {
+    --wine-dark: #722F37;
+    --black: #1a1a1a;
+    --gray-dark: #2d2d2d;
+    --green-white: #E8F5E9;
+    --radioactive-green: #39FF14;
+    --cold-blue: #0047AB;
+}
+
+body {
+    background: linear-gradient(135deg, var(--black) 0%, var(--gray-dark) 100%);
+    color: var(--green-white);
+    min-height: 100vh;
+}
+
+/* Navbar */
+.navbar-brand {
+    color: var(--wine-dark) !important;
+    font-weight: bold;
+    font-size: 1.8rem;
+}
+
+/* Cards hover effect */
+.hover-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+.hover-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.5) !important;
+}
+
+/* Slow mode colors */
+.slow-card {
+    background: linear-gradient(135deg, #0a1628 0%, var(--cold-blue) 100%);
+    border: 3px solid var(--cold-blue) !important;
+}
+
+.slow-text {
+    color: var(--cold-blue);
+    text-shadow: 0 0 20px rgba(0, 71, 171, 0.5);
+}
+
+/* Speed mode colors */
+.speed-card {
+    background: linear-gradient(135deg, #1a2f1a 0%, var(--radioactive-green) 100%);
+    border: 3px solid var(--radioactive-green) !important;
+}
+
+.speed-text {
+    color: var(--radioactive-green);
+    text-shadow: 0 0 20px rgba(57, 255, 20, 0.5);
+}
+
+/* Buttons */
+.btn-slow {
+    background-color: var(--cold-blue);
+    border: none;
+    color: white;
+    font-weight: bold;
+    padding: 15px 40px;
+    transition: all 0.3s ease;
+}
+
+.btn-slow:hover {
+    background-color: #003d99;
+    transform: scale(1.05);
+    box-shadow: 0 5px 20px rgba(0, 71, 171, 0.4);
+}
+
+.btn-speed {
+    background-color: var(--radioactive-green);
+    border: none;
+    color: black;
+    font-weight: bold;
+    padding: 15px 40px;
+    transition: all 0.3s ease;
+}
+
+.btn-speed:hover {
+    background-color: #32d612;
+    transform: scale(1.05);
+    box-shadow: 0 5px 20px rgba(57, 255, 20, 0.4);
+}
+
+/* Progress bar colors */
+.bg-slow {
+    background-color: var(--cold-blue) !important;
+}
+
+.bg-speed {
+    background-color: var(--radioactive-green) !important;
+}
+
+/* Form controls */
+.form-control {
+    background-color: var(--gray-dark);
+    border: 2px solid var(--wine-dark);
+    color: var(--green-white);
+}
+
+.form-control:focus {
+    background-color: var(--black);
+    border-color: var(--radioactive-green);
+    color: var(--green-white);
+    box-shadow: 0 0 0 0.2rem rgba(57, 255, 20, 0.25);
+}
+
+/* Range slider */
+.form-range::-webkit-slider-thumb {
+    background: var(--wine-dark);
+}
+
+.form-range::-webkit-slider-thumb:hover {
+    background: var(--radioactive-green);
+}
+
+/* Text colors */
+.text-danger {
+    color: var(--wine-dark) !important;
+}
+
+.text-secondary {
+    color: var(--green-white) !important;
+    opacity: 0.7;
+}
+
+/* Card backgrounds */
+.card {
+    background-color: var(--gray-dark);
+    border: 2px solid var(--wine-dark);
+}
+
+/* Progress bar container */
+.progress {
+    background-color: var(--black);
+    border: 2px solid var(--wine-dark);
+}

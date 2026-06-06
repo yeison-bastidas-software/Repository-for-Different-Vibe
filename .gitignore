@@ -1,0 +1,17 @@
+# Database files
+*.db
+
+# Audio files (User uploads and processed results)
+uploads/*
+static/processed/*
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# VS Code settings
+.vscode/
+
+# OS files
+.DS_Store
