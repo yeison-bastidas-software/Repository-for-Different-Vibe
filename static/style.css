@@ -12,30 +12,39 @@ body {
     background: linear-gradient(135deg, var(--black) 0%, var(--gray-dark) 100%);
     color: var(--green-white);
     min-height: 100vh;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 /* Navbar */
+.navbar {
+    backdrop-filter: blur(10px);
+    border-bottom: 2px solid var(--wine-dark);
+}
+
 .navbar-brand {
     color: var(--wine-dark) !important;
     font-weight: bold;
     font-size: 1.8rem;
+    text-shadow: 0 0 10px rgba(114, 47, 55, 0.3);
 }
 
 /* Cards hover effect */
 .hover-card {
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     cursor: pointer;
+    border-radius: 15px !important;
 }
 
 .hover-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 15px 35px rgba(0,0,0,0.5) !important;
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.6) !important;
 }
 
 /* Slow mode colors */
 .slow-card {
     background: linear-gradient(135deg, #0a1628 0%, var(--cold-blue) 100%);
     border: 3px solid var(--cold-blue) !important;
+    border-radius: 15px !important;
 }
 
 .slow-text {
@@ -47,6 +56,7 @@ body {
 .speed-card {
     background: linear-gradient(135deg, #1a2f1a 0%, var(--radioactive-green) 100%);
     border: 3px solid var(--radioactive-green) !important;
+    border-radius: 15px !important;
 }
 
 .speed-text {
@@ -56,42 +66,46 @@ body {
 
 /* Buttons */
 .btn-slow {
-    background-color: var(--cold-blue);
+    background: linear-gradient(135deg, var(--cold-blue) 0%, #0056cc 100%);
     border: none;
     color: white;
     font-weight: bold;
     padding: 15px 40px;
+    border-radius: 50px;
     transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 71, 171, 0.3);
 }
 
 .btn-slow:hover {
-    background-color: #003d99;
-    transform: scale(1.05);
-    box-shadow: 0 5px 20px rgba(0, 71, 171, 0.4);
+    background: linear-gradient(135deg, #003d99 0%, var(--cold-blue) 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 71, 171, 0.5);
 }
 
 .btn-speed {
-    background-color: var(--radioactive-green);
+    background: linear-gradient(135deg, var(--radioactive-green) 0%, #50ff30 100%);
     border: none;
     color: black;
     font-weight: bold;
     padding: 15px 40px;
+    border-radius: 50px;
     transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(57, 255, 20, 0.3);
 }
 
 .btn-speed:hover {
-    background-color: #32d612;
-    transform: scale(1.05);
-    box-shadow: 0 5px 20px rgba(57, 255, 20, 0.4);
+    background: linear-gradient(135deg, #32d612 0%, var(--radioactive-green) 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(57, 255, 20, 0.5);
 }
 
 /* Progress bar colors */
 .bg-slow {
-    background-color: var(--cold-blue) !important;
+    background: linear-gradient(90deg, var(--cold-blue), #0066ff) !important;
 }
 
 .bg-speed {
-    background-color: var(--radioactive-green) !important;
+    background: linear-gradient(90deg, var(--radioactive-green), #6aff50) !important;
 }
 
 /* Form controls */
@@ -99,6 +113,9 @@ body {
     background-color: var(--gray-dark);
     border: 2px solid var(--wine-dark);
     color: var(--green-white);
+    border-radius: 10px;
+    padding: 12px 15px;
+    transition: all 0.3s ease;
 }
 
 .form-control:focus {
@@ -111,10 +128,18 @@ body {
 /* Range slider */
 .form-range::-webkit-slider-thumb {
     background: var(--wine-dark);
+    border-radius: 50%;
+    transition: all 0.3s ease;
 }
 
 .form-range::-webkit-slider-thumb:hover {
     background: var(--radioactive-green);
+    transform: scale(1.2);
+}
+
+.form-range::-webkit-slider-runnable-track {
+    background: var(--gray-dark);
+    border-radius: 10px;
 }
 
 /* Text colors */
@@ -131,10 +156,72 @@ body {
 .card {
     background-color: var(--gray-dark);
     border: 2px solid var(--wine-dark);
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
 /* Progress bar container */
 .progress {
     background-color: var(--black);
     border: 2px solid var(--wine-dark);
+    border-radius: 50px;
+    overflow: hidden;
+}
+
+/* Custom file upload button */
+.btn-outline-light {
+    border-radius: 50px;
+    border-width: 2px;
+    transition: all 0.3s ease;
+}
+
+.btn-outline-light:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(255, 255, 255, 0.2);
+}
+
+/* Audio player styling */
+audio {
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Download buttons */
+.btn-success {
+    background: linear-gradient(135deg, #28a745 0%, #34ce57 100%);
+    border: none;
+    border-radius: 50px;
+    box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+    transition: all 0.3s ease;
+}
+
+.btn-success:hover {
+    background: linear-gradient(135deg, #218838 0%, #28a745 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(40, 167, 69, 0.5);
+}
+
+.btn-outline-secondary {
+    border-radius: 50px;
+    border-width: 2px;
+    transition: all 0.3s ease;
+}
+
+.btn-outline-secondary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(108, 117, 125, 0.3);
+}
+
+/* Animation for cards on choose page */
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+}
+
+.hover-card {
+    animation: float 3s ease-in-out infinite;
+}
+
+.hover-card:nth-child(odd) {
+    animation-delay: 0.5s;
 }

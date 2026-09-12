@@ -1,18 +1,20 @@
 from pydub import AudioSegment
 import os
 
-def process_audio(input_path, output_path, mode, percentage):
+def process_audio(input_path, output_path_mp3, output_path_wav, mode, percentage):
     """
     Process audio based on mode and intensity.
     Uses frame-rate override for stable speed/pitch change.
+    Returns tuple (success_mp3, success_wav)
     """
     try:
-        audio = AudioSegment.from_mp3(input_path)
+        audio = AudioSegment.from_file(input_path)
 
         # No effect at 0%
         if percentage == 0:
-            audio.export(output_path, format="mp3")
-            return True
+            audio.export(output_path_mp3, format="mp3")
+            audio.export(output_path_wav, format="wav")
+            return True, True
 
         # Calculate speed factor
         if mode == 'slow':
@@ -29,9 +31,10 @@ def process_audio(input_path, output_path, mode, percentage):
         new_audio = audio._spawn(audio.raw_data, overrides={"frame_rate": new_frame_rate})
         new_audio = new_audio.set_frame_rate(audio.frame_rate)
 
-        # Export result
-        new_audio.export(output_path, format="mp3")
-        return True
+        # Export results
+        new_audio.export(output_path_mp3, format="mp3")
+        new_audio.export(output_path_wav, format="wav")
+        return True, True
 
     except Exception as e:
-        return False
+        return False, False

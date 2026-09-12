@@ -1,17 +1,36 @@
-# Database files
-*.db
-
-# Audio files (User uploads and processed results)
-uploads/*
-static/processed/*
-
-# Python cache
-__pycache__/
+```
+# Compiled and build artifacts
 *.pyc
-*.pyo
+__pycache__/
+*.o
+*.obj
 
-# VS Code settings
+# Dependencies
+.venv/
+venv/
+node_modules/
+
+# Logs and temp files
+*.log
+*.tmp
+*.swp
+
+# Environment
+.env
+.env.local
+*.env.*
+
+# Editors
 .vscode/
+.idea/
 
-# OS files
-.DS_Store
+# Coverage reports
+.coverage
+coverage/
+htmlcov/
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
+```

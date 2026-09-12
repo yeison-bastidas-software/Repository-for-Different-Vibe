@@ -80,12 +80,18 @@ def process():
         return redirect("/")
 
     input_path = os.path.join(app.config["UPLOAD_FOLDER"], session["filename"])
-    output_filename = f"processed_{session['filename']}"
-    output_path = os.path.join(app.config["PROCESSED_FOLDER"], output_filename)
+    
+    # Generate output filenames for both MP3 and WAV
+    base_filename = f"processed_{session['filename']}"
+    output_filename_mp3 = f"{os.path.splitext(base_filename)[0]}.mp3"
+    output_filename_wav = f"{os.path.splitext(base_filename)[0]}.wav"
+    
+    output_path_mp3 = os.path.join(app.config["PROCESSED_FOLDER"], output_filename_mp3)
+    output_path_wav = os.path.join(app.config["PROCESSED_FOLDER"], output_filename_wav)
 
-    success = process_audio(input_path, output_path, mode, intensity)
+    success_mp3, success_wav = process_audio(input_path, output_path_mp3, output_path_wav, mode, intensity)
 
-    if not success:
+    if not success_mp3 or not success_wav:
         return "Error processing audio", 500
 
     db.execute("INSERT INTO history (filename, mode, intensity) VALUES (?, ?, ?)",
@@ -94,14 +100,16 @@ def process():
     session.pop("filename", None)
     session.pop("original_name", None)
 
-    return redirect(url_for("result", filename=output_filename))
+    # Pass both filenames to result page
+    return redirect(url_for("result", filename_mp3=output_filename_mp3, filename_wav=output_filename_wav))
 
 @app.route("/result")
 def result():
-    filename = request.args.get("filename")
-    if not filename:
+    filename_mp3 = request.args.get("filename_mp3")
+    filename_wav = request.args.get("filename_wav")
+    if not filename_mp3 or not filename_wav:
         return redirect("/")
-    return render_template("result.html", filename=filename)
+    return render_template("result.html", filename_mp3=filename_mp3, filename_wav=filename_wav)
 
 @app.route("/download/<filename>")
 def download(filename):
