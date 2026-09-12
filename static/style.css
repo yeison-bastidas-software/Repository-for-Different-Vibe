@@ -12,129 +12,340 @@ body {
     background: linear-gradient(135deg, var(--black) 0%, var(--gray-dark) 100%);
     color: var(--green-white);
     min-height: 100vh;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* Navbar */
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+.animate-title {
+    animation: fadeInUp 0.8s ease-out;
+}
+
+.fade-in {
+    animation: fadeIn 0.6s ease-out;
+}
+
+.fade-in-up {
+    animation: fadeInUp 0.8s ease-out;
+}
+
+/* Navbar with smooth shadow */
+.navbar {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
+    background: rgba(26, 26, 26, 0.95) !important;
+}
+
 .navbar-brand {
     color: var(--wine-dark) !important;
     font-weight: bold;
     font-size: 1.8rem;
+    text-shadow: 0 0 10px rgba(114, 47, 55, 0.5);
+    transition: all 0.3s ease;
 }
 
-/* Cards hover effect */
+.navbar-brand:hover {
+    text-shadow: 0 0 20px rgba(114, 47, 55, 0.8);
+    transform: scale(1.05);
+}
+
+/* Cards hover effect - smoother */
 .hover-card {
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     cursor: pointer;
+    border-radius: 15px !important;
+    overflow: hidden;
 }
 
 .hover-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 15px 35px rgba(0,0,0,0.5) !important;
+    transform: translateY(-15px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.6) !important;
 }
 
-/* Slow mode colors */
+/* Slow mode colors with gradient glow */
 .slow-card {
     background: linear-gradient(135deg, #0a1628 0%, var(--cold-blue) 100%);
     border: 3px solid var(--cold-blue) !important;
+    box-shadow: 0 10px 30px rgba(0, 71, 171, 0.3);
 }
 
 .slow-text {
     color: var(--cold-blue);
-    text-shadow: 0 0 20px rgba(0, 71, 171, 0.5);
+    text-shadow: 0 0 25px rgba(0, 71, 171, 0.7);
+    font-weight: 700;
 }
 
-/* Speed mode colors */
+/* Speed mode colors with gradient glow */
 .speed-card {
     background: linear-gradient(135deg, #1a2f1a 0%, var(--radioactive-green) 100%);
     border: 3px solid var(--radioactive-green) !important;
+    box-shadow: 0 10px 30px rgba(57, 255, 20, 0.3);
 }
 
 .speed-text {
     color: var(--radioactive-green);
-    text-shadow: 0 0 20px rgba(57, 255, 20, 0.5);
+    text-shadow: 0 0 25px rgba(57, 255, 20, 0.7);
+    font-weight: 700;
 }
 
-/* Buttons */
+/* Buttons with smooth transitions */
 .btn-slow {
-    background-color: var(--cold-blue);
+    background: linear-gradient(135deg, var(--cold-blue) 0%, #0056cc 100%);
     border: none;
     color: white;
     font-weight: bold;
     padding: 15px 40px;
-    transition: all 0.3s ease;
-}
-
-.btn-slow:hover {
-    background-color: #003d99;
-    transform: scale(1.05);
+    border-radius: 50px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     box-shadow: 0 5px 20px rgba(0, 71, 171, 0.4);
 }
 
+.btn-slow:hover {
+    background: linear-gradient(135deg, #003d99 0%, var(--cold-blue) 100%);
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 10px 30px rgba(0, 71, 171, 0.6);
+}
+
 .btn-speed {
-    background-color: var(--radioactive-green);
+    background: linear-gradient(135deg, var(--radioactive-green) 0%, #4dff33 100%);
     border: none;
     color: black;
     font-weight: bold;
     padding: 15px 40px;
-    transition: all 0.3s ease;
-}
-
-.btn-speed:hover {
-    background-color: #32d612;
-    transform: scale(1.05);
+    border-radius: 50px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     box-shadow: 0 5px 20px rgba(57, 255, 20, 0.4);
 }
 
-/* Progress bar colors */
+.btn-speed:hover {
+    background: linear-gradient(135deg, #32d612 0%, var(--radioactive-green) 100%);
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 10px 30px rgba(57, 255, 20, 0.6);
+}
+
+/* Progress bar colors with animation */
 .bg-slow {
-    background-color: var(--cold-blue) !important;
+    background: linear-gradient(90deg, var(--cold-blue) 0%, #0066ff 100%) !important;
+    transition: width 0.3s ease;
 }
 
 .bg-speed {
-    background-color: var(--radioactive-green) !important;
+    background: linear-gradient(90deg, var(--radioactive-green) 0%, #66ff66 100%) !important;
+    transition: width 0.3s ease;
 }
 
-/* Form controls */
+/* Form controls with smooth focus */
 .form-control {
     background-color: var(--gray-dark);
     border: 2px solid var(--wine-dark);
     color: var(--green-white);
+    border-radius: 10px;
+    transition: all 0.3s ease;
 }
 
 .form-control:focus {
     background-color: var(--black);
     border-color: var(--radioactive-green);
     color: var(--green-white);
-    box-shadow: 0 0 0 0.2rem rgba(57, 255, 20, 0.25);
+    box-shadow: 0 0 15px rgba(57, 255, 20, 0.3);
+    transform: translateY(-2px);
 }
 
-/* Range slider */
+/* Range slider with custom styling */
+.form-range {
+    cursor: pointer;
+}
+
 .form-range::-webkit-slider-thumb {
-    background: var(--wine-dark);
+    background: linear-gradient(135deg, var(--wine-dark) 0%, #993344 100%);
+    border-radius: 50%;
+    box-shadow: 0 2px 10px rgba(114, 47, 55, 0.5);
+    transition: all 0.3s ease;
 }
 
 .form-range::-webkit-slider-thumb:hover {
-    background: var(--radioactive-green);
+    background: linear-gradient(135deg, var(--radioactive-green) 0%, #66ff66 100%);
+    transform: scale(1.2);
+    box-shadow: 0 4px 15px rgba(57, 255, 20, 0.6);
 }
 
-/* Text colors */
+/* Text colors with subtle glow */
 .text-danger {
     color: var(--wine-dark) !important;
+    text-shadow: 0 0 10px rgba(114, 47, 55, 0.3);
 }
 
 .text-secondary {
     color: var(--green-white) !important;
-    opacity: 0.7;
+    opacity: 0.8;
 }
 
-/* Card backgrounds */
+/* Card backgrounds with soft shadows */
 .card {
     background-color: var(--gray-dark);
     border: 2px solid var(--wine-dark);
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
-/* Progress bar container */
+/* Progress bar container with glow */
 .progress {
     background-color: var(--black);
     border: 2px solid var(--wine-dark);
+    border-radius: 50px;
+    overflow: hidden;
+    box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.5);
 }
+
+/* File upload button styling */
+.btn-outline-light {
+    border-radius: 50px;
+    transition: all 0.3s ease;
+    border: 2px solid var(--wine-dark);
+    color: var(--green-white);
+}
+
+.btn-outline-light:hover {
+    background-color: var(--wine-dark);
+    border-color: var(--wine-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(114, 47, 55, 0.4);
+}
+
+/* Download buttons */
+.btn-success {
+    background: linear-gradient(135deg, #28a745 0%, #34ce57 100%);
+    border: none;
+    border-radius: 50px;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 20px rgba(40, 167, 69, 0.4);
+}
+
+.btn-success:hover {
+    background: linear-gradient(135deg, #218838 0%, #28a745 100%);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(40, 167, 69, 0.6);
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--cold-blue) 0%, #0066ff 100%);
+    border: none;
+    border-radius: 50px;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 20px rgba(0, 71, 171, 0.4);
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, #003d99 0%, var(--cold-blue) 100%);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0, 71, 171, 0.6);
+}
+
+.btn-outline-secondary {
+    border-radius: 50px;
+    transition: all 0.3s ease;
+}
+
+.btn-outline-secondary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(108, 117, 125, 0.4);
+}
+
+/* Audio player customization */
+audio {
+    border-radius: 50px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Smooth animations for all interactive elements */
+* {
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* File name display */
+#file-name-display {
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+/* Intensity value display */
+#intensity-val {
+    font-size: 1.2rem;
+    transition: all 0.2s ease;
+}
+
+/* Additional UI enhancements */
+.file-upload-btn {
+    position: relative;
+    overflow: hidden;
+}
+
+.file-upload-btn::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.file-upload-btn:hover::after {
+    width: 300px;
+    height: 300px;
+}
+
+.upload-btn {
+    position: relative;
+    overflow: hidden;
+}
+
+.process-btn {
+    animation: pulse 2s infinite;
+}
+
+.intensity-display {
+    font-size: 1.5rem;
+    text-shadow: 0 0 10px rgba(114, 47, 55, 0.5);
+}
+
+.file-name-display {
+    font-style: italic;
+    word-break: break-all;
+}
+
+/* Success message animation */
+@keyframes successPulse {
+    0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.7); }
+    50% { transform: scale(1.05); box-shadow: 0 0 0 15px rgba(40, 167, 69, 0); }
+    100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(40, 167, 69, 0); }
+}
+
+.btn-success {
+    animation: successPulse 2s infinite;
+}
+
+

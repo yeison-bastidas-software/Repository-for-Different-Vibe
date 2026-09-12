@@ -8,12 +8,15 @@
         <h2 class="text-danger mb-4">Your Edit is Ready!</h2>
 
         <audio controls class="w-100 mb-4">
-            <source src="{{ url_for('static', filename='processed/' + filename) }}" type="audio/mpeg">
+            <source src="{{ url_for('static', filename='processed/' + mp3_filename) }}" type="audio/mpeg">
         </audio>
 
         <div class="d-grid gap-2 d-md-flex justify-content-md-center">
-            <a href="{{ url_for('static', filename='processed/' + filename) }}" download class="btn btn-success btn-lg px-5">
+            <a href="{{ url_for('download', filename=mp3_filename) }}" class="btn btn-success btn-lg px-5">
                 Download MP3
+            </a>
+            <a href="{{ url_for('download', filename=wav_filename) }}" class="btn btn-primary btn-lg px-5">
+                Download WAV
             </a>
             <a href="/" class="btn btn-outline-secondary btn-lg px-5">Start Over</a>
         </div>

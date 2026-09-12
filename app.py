@@ -1,6 +1,5 @@
 import os
 import uuid
-from cs50 import SQL
 from flask import Flask, redirect, render_template, request, session, url_for, send_from_directory
 
 from helpers import process_audio
@@ -14,17 +13,6 @@ app.config["MAX_CONTENT_LENGTH"] = 16 * 1024 * 1024
 
 os.makedirs(app.config["UPLOAD_FOLDER"], exist_ok=True)
 os.makedirs(app.config["PROCESSED_FOLDER"], exist_ok=True)
-
-db = SQL("sqlite:///final_project.db")
-db.execute("""
-    CREATE TABLE IF NOT EXISTS history (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        filename TEXT NOT NULL,
-        mode TEXT NOT NULL,
-        intensity INTEGER NOT NULL,
-        created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-    )
-""")
 
 @app.route("/", methods=["GET", "POST"])
 def index():
@@ -80,28 +68,30 @@ def process():
         return redirect("/")
 
     input_path = os.path.join(app.config["UPLOAD_FOLDER"], session["filename"])
-    output_filename = f"processed_{session['filename']}"
-    output_path = os.path.join(app.config["PROCESSED_FOLDER"], output_filename)
+    output_filename_base = f"processed_{session['filename']}"
+    output_path = os.path.join(app.config["PROCESSED_FOLDER"], output_filename_base)
 
     success = process_audio(input_path, output_path, mode, intensity)
 
     if not success:
         return "Error processing audio", 500
 
-    db.execute("INSERT INTO history (filename, mode, intensity) VALUES (?, ?, ?)",
-               session["original_name"], mode, intensity)
+    # Store both MP3 and WAV filenames in session
+    session["mp3_filename"] = output_filename_base.replace('.mp3', '_output.mp3') if not output_filename_base.endswith('_output.mp3') else output_filename_base
+    session["wav_filename"] = session["mp3_filename"].replace('_output.mp3', '_output.wav')
 
     session.pop("filename", None)
     session.pop("original_name", None)
 
-    return redirect(url_for("result", filename=output_filename))
+    return redirect(url_for("result"))
 
 @app.route("/result")
 def result():
-    filename = request.args.get("filename")
-    if not filename:
+    mp3_filename = session.get("mp3_filename")
+    wav_filename = session.get("wav_filename")
+    if not mp3_filename or not wav_filename:
         return redirect("/")
-    return render_template("result.html", filename=filename)
+    return render_template("result.html", mp3_filename=mp3_filename, wav_filename=wav_filename)
 
 @app.route("/download/<filename>")
 def download(filename):

@@ -5,13 +5,13 @@
 {% block main %}
 <div class="row justify-content-center mt-5">
     <div class="col-md-8">
-        <h2 class="text-center text-danger mb-4">
-            {% if mode == 'slow' %}SLOW MODE{% else %}SPEED MODE{% endif %}
+        <h2 class="text-center text-danger mb-4 animate-title">
+            {% if mode == 'slow' %}🐌 SLOW MODE{% else %}⚡ SPEED MODE{% endif %}
         </h2>
 
-        <div class="card border-0 shadow p-4 mb-4">
+        <div class="card border-0 shadow p-4 mb-4 fade-in-up">
             <label class="form-label text-secondary mb-3">
-                Intensity: <span id="intensity-val" class="text-danger fw-bold">0</span>%
+                Intensity: <span id="intensity-val" class="text-danger fw-bold intensity-display">0</span>%
             </label>
 
             <input type="range" class="form-range" id="intensity" min="0" max="100" value="0">
@@ -20,13 +20,13 @@
             <input type="hidden" id="file-size" value="{{ file_size_mb }}">
 
             <div class="text-center mt-4">
-                <button onclick="processAudio()" class="btn btn-lg px-5 {% if mode == 'slow' %}btn-slow{% else %}btn-speed{% endif %}">
-                    Process Audio
+                <button onclick="processAudio()" class="btn btn-lg px-5 {% if mode == 'slow' %}btn-slow{% else %}btn-speed{% endif %} process-btn">
+                    <span class="me-2">🎚️</span> Process Audio
                 </button>
             </div>
         </div>
 
-        <div id="progress-container" class="d-none">
+        <div id="progress-container" class="d-none fade-in">
             <div class="progress" style="height: 30px;">
                 <div id="progress-bar" class="progress-bar {% if mode == 'slow' %}bg-slow{% else %}bg-speed{% endif %}" role="progressbar" style="width: 0%"></div>
             </div>
