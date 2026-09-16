@@ -1,6 +1,7 @@
 /* Main colors */
 :root {
     --wine-dark: #722F37;
+    --wine-light: #8a3d46;
     --black: #1a1a1a;
     --gray-dark: #2d2d2d;
     --green-white: #E8F5E9;
@@ -12,13 +13,26 @@ body {
     background: linear-gradient(135deg, var(--black) 0%, var(--gray-dark) 100%);
     color: var(--green-white);
     min-height: 100vh;
+    font-family: 'Poppins', sans-serif;
 }
 
 /* Navbar */
-.navbar-brand {
+.navbar {
+    background: linear-gradient(135deg, var(--black) 0%, var(--gray-dark) 100%);
+    border-bottom: 2px solid var(--wine-dark);
+}
+
+.brand-text {
     color: var(--wine-dark) !important;
-    font-weight: bold;
+    font-weight: 700;
     font-size: 1.8rem;
+    text-shadow: 0 0 10px rgba(114, 47, 55, 0.3);
+    transition: all 0.3s ease;
+}
+
+.brand-text:hover {
+    color: var(--wine-light) !important;
+    text-shadow: 0 0 20px rgba(114, 47, 55, 0.6);
 }
 
 /* Cards hover effect */
@@ -64,7 +78,7 @@ body {
     transition: all 0.3s ease;
 }
 
-.btn-slow:hover {
+.btn-slow:hover:not(:disabled) {
     background-color: #003d99;
     transform: scale(1.05);
     box-shadow: 0 5px 20px rgba(0, 71, 171, 0.4);
@@ -79,7 +93,7 @@ body {
     transition: all 0.3s ease;
 }
 
-.btn-speed:hover {
+.btn-speed:hover:not(:disabled) {
     background-color: #32d612;
     transform: scale(1.05);
     box-shadow: 0 5px 20px rgba(57, 255, 20, 0.4);
@@ -118,13 +132,9 @@ body {
 }
 
 /* Text colors */
-.text-danger {
-    color: var(--wine-dark) !important;
-}
-
-.text-secondary {
+.text-muted {
     color: var(--green-white) !important;
-    opacity: 0.7;
+    opacity: 0.6;
 }
 
 /* Card backgrounds */
@@ -137,4 +147,56 @@ body {
 .progress {
     background-color: var(--black);
     border: 2px solid var(--wine-dark);
+}
+
+/* Upload button styling */
+.upload-btn {
+    border-color: var(--wine-dark);
+    color: var(--green-white);
+    transition: all 0.3s ease;
+}
+
+.upload-btn:hover {
+    background-color: var(--wine-dark);
+    border-color: var(--wine-light);
+    color: white;
+}
+
+/* Download buttons - Wine color base */
+.btn-download-active {
+    background-color: var(--wine-dark);
+    border: 2px solid var(--wine-dark);
+    color: white;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    animation: pulse-active 2s infinite;
+}
+
+.btn-download-active:hover {
+    background-color: var(--wine-light);
+    border-color: var(--wine-light);
+    transform: scale(1.05);
+    box-shadow: 0 5px 20px rgba(114, 47, 55, 0.4);
+}
+
+.btn-download-inactive {
+    background-color: var(--wine-dark);
+    border: 2px solid var(--wine-dark);
+    color: white;
+    font-weight: 600;
+    opacity: 0.4;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+@keyframes pulse-active {
+    0% {
+        box-shadow: 0 0 0 0 rgba(114, 47, 55, 0.4);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(114, 47, 55, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(114, 47, 55, 0);
+    }
 }

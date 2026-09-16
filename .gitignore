@@ -1,17 +1,40 @@
-# Database files
-*.db
-
-# Audio files (User uploads and processed results)
-uploads/*
-static/processed/*
-
-# Python cache
+```
+# Python
 __pycache__/
 *.pyc
 *.pyo
+*.pyd
+*.py~
+*.py.class
+.Python
+venv/
+.venv/
+.env
+.env.local
+.env.*
+.envrc
+.pytest_cache/
+.mypy_cache/
+.coverage
+coverage/
+htmlcov/
 
-# VS Code settings
-.vscode/
+# Build artifacts
+dist/
+build/
+*.egg-info/
 
-# OS files
+# Logs
+*.log
+
+# OS generated files
 .DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*.tmp
+```

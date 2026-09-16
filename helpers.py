@@ -5,14 +5,23 @@ def process_audio(input_path, output_path, mode, percentage):
     """
     Process audio based on mode and intensity.
     Uses frame-rate override for stable speed/pitch change.
+    Supports both MP3 and WAV input/output formats.
+    Returns a tuple of (success: bool, output_format: str)
     """
     try:
-        audio = AudioSegment.from_mp3(input_path)
+        # Detect input format
+        file_ext = os.path.splitext(input_path)[1].lower()
+        if file_ext == '.wav':
+            audio = AudioSegment.from_wav(input_path)
+            input_format = 'wav'
+        else:
+            audio = AudioSegment.from_mp3(input_path)
+            input_format = 'mp3'
 
         # No effect at 0%
         if percentage == 0:
-            audio.export(output_path, format="mp3")
-            return True
+            audio.export(output_path, format=input_format)
+            return True, input_format
 
         # Calculate speed factor
         if mode == 'slow':
@@ -29,9 +38,9 @@ def process_audio(input_path, output_path, mode, percentage):
         new_audio = audio._spawn(audio.raw_data, overrides={"frame_rate": new_frame_rate})
         new_audio = new_audio.set_frame_rate(audio.frame_rate)
 
-        # Export result
-        new_audio.export(output_path, format="mp3")
-        return True
+        # Export result in the same format as input
+        new_audio.export(output_path, format=input_format)
+        return True, input_format
 
     except Exception as e:
-        return False
+        return False, None

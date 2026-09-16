@@ -5,17 +5,16 @@
 {% block main %}
 <div class="row justify-content-center mt-5">
     <div class="col-md-8 text-center">
-        <h1 class="display-4 text-danger mb-4">Different Vibe</h1>
-        <p class="lead text-secondary mb-5">Transform your audio. Slowed or Speed up.</p>
+        <h1 class="display-4 brand-text mb-4">Different Vibe</h1>
+        <p class="lead text-muted mb-5">Transform your audio. Slowed or Speed up.</p>
 
         <form action="/" method="post" enctype="multipart/form-data" class="mb-5">
             <div class="mb-4">
-                <!-- Custom File Input -->
-                <label for="audio-upload" class="btn btn-outline-light btn-lg px-5 w-100">Select Audio File</label>
+                <label for="audio-upload" class="btn btn-outline-light btn-lg px-5 w-100 upload-btn">Select Audio File</label>
                 <input id="audio-upload" type="file" name="audio" accept=".mp3,.wav" required style="display: none;" onchange="updateFileName(this)">
-                <div id="file-name-display" class="text-secondary mt-2">No file chosen</div>
+                <div id="file-name-display" class="text-muted mt-2">No file chosen</div>
             </div>
-            <button type="submit" class="btn btn-outline-light btn-lg px-5">Upload Audio</button>
+            <button type="submit" class="btn btn-outline-light btn-lg px-5 upload-btn">Upload Audio</button>
         </form>
     </div>
 </div>

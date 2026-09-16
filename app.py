@@ -1,6 +1,5 @@
 import os
 import uuid
-from cs50 import SQL
 from flask import Flask, redirect, render_template, request, session, url_for, send_from_directory
 
 from helpers import process_audio
@@ -14,17 +13,6 @@ app.config["MAX_CONTENT_LENGTH"] = 16 * 1024 * 1024
 
 os.makedirs(app.config["UPLOAD_FOLDER"], exist_ok=True)
 os.makedirs(app.config["PROCESSED_FOLDER"], exist_ok=True)
-
-db = SQL("sqlite:///final_project.db")
-db.execute("""
-    CREATE TABLE IF NOT EXISTS history (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        filename TEXT NOT NULL,
-        mode TEXT NOT NULL,
-        intensity INTEGER NOT NULL,
-        created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-    )
-""")
 
 @app.route("/", methods=["GET", "POST"])
 def index():
@@ -80,28 +68,34 @@ def process():
         return redirect("/")
 
     input_path = os.path.join(app.config["UPLOAD_FOLDER"], session["filename"])
-    output_filename = f"processed_{session['filename']}"
+    
+    # Get original filename and extension
+    original_name = session["original_name"]
+    base_name = os.path.splitext(original_name)[0]
+    file_ext = os.path.splitext(original_name)[1].lower()
+    
+    # Create output filename with effect name and same extension
+    effect_suffix = "_slow" if mode == "slow" else "_speed"
+    output_filename = f"{base_name}{effect_suffix}{file_ext}"
     output_path = os.path.join(app.config["PROCESSED_FOLDER"], output_filename)
 
-    success = process_audio(input_path, output_path, mode, intensity)
+    success, output_format = process_audio(input_path, output_path, mode, intensity)
 
     if not success:
         return "Error processing audio", 500
 
-    db.execute("INSERT INTO history (filename, mode, intensity) VALUES (?, ?, ?)",
-               session["original_name"], mode, intensity)
-
     session.pop("filename", None)
     session.pop("original_name", None)
 
-    return redirect(url_for("result", filename=output_filename))
+    return redirect(url_for("result", filename=output_filename, format=output_format))
 
 @app.route("/result")
 def result():
     filename = request.args.get("filename")
+    audio_format = request.args.get("format", "mp3")
     if not filename:
         return redirect("/")
-    return render_template("result.html", filename=filename)
+    return render_template("result.html", filename=filename, audio_format=audio_format)
 
 @app.route("/download/<filename>")
 def download(filename):

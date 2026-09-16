@@ -5,17 +5,29 @@
 {% block main %}
 <div class="row justify-content-center mt-5">
     <div class="col-md-8 text-center">
-        <h2 class="text-danger mb-4">Your Edit is Ready!</h2>
+        <h2 class="brand-text mb-4">Your Edit is Ready!</h2>
 
         <audio controls class="w-100 mb-4">
             <source src="{{ url_for('static', filename='processed/' + filename) }}" type="audio/mpeg">
         </audio>
 
         <div class="d-grid gap-2 d-md-flex justify-content-md-center">
-            <a href="{{ url_for('static', filename='processed/' + filename) }}" download class="btn btn-success btn-lg px-5">
+            {% if audio_format == 'wav' %}
+            <a href="{{ url_for('download', filename=filename) }}" class="btn btn-download-active btn-lg px-5">
+                Download WAV
+            </a>
+            <a href="#" class="btn btn-download-inactive btn-lg px-5">
                 Download MP3
             </a>
-            <a href="/" class="btn btn-outline-secondary btn-lg px-5">Start Over</a>
+            {% else %}
+            <a href="{{ url_for('download', filename=filename) }}" class="btn btn-download-active btn-lg px-5">
+                Download MP3
+            </a>
+            <a href="#" class="btn btn-download-inactive btn-lg px-5">
+                Download WAV
+            </a>
+            {% endif %}
+            <a href="/" class="btn btn-outline-light btn-lg px-5">Start Over</a>
         </div>
     </div>
 </div>
