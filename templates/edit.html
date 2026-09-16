@@ -36,56 +36,56 @@
 </div>
 
 <script>
-    let isProcessing = false;
-    
-    function processAudio() {
-        if (isProcessing) {
-            return;
-        }
-        
-        const intensity = document.getElementById('intensity').value;
-        const mode = document.getElementById('mode-value').value;
-        const processBtn = document.getElementById('process-btn');
-        const intensitySlider = document.getElementById('intensity');
+// Progress bar synced with real server completion
+document.addEventListener('DOMContentLoaded', () => {
+    const processBtn = document.querySelector('.process-btn') || document.querySelector('button[onclick]');
+    const progressContainer = document.getElementById('progress-container');
+    const progressBar = document.getElementById('progress-bar');
+    const progressText = document.getElementById('progress-text');
+    const intensityInput = document.getElementById('intensity');
+    const modeInput = document.getElementById('mode-value');
+    const mode = modeInput ? modeInput.value : new URLSearchParams(location.search).get('mode');
 
-        const progressContainer = document.getElementById('progress-container');
-        const progressBar = document.getElementById('progress-bar');
-        const progressText = document.getElementById('progress-text');
+    if (!processBtn) return;
+    processBtn.removeAttribute('onclick');
 
-        const fileSizeMb = parseFloat(document.getElementById('file-size').value) || 1;
-        const estimatedDurationMs = Math.max(2000, fileSizeMb * 1500);
-        const intervalTime = 50;
-        const steps = estimatedDurationMs / intervalTime;
-        const increment = 100 / steps;
-
-        if (!progressContainer || !progressBar || !progressText) return;
-
-        isProcessing = true;
+    processBtn.addEventListener('click', async () => {
         processBtn.disabled = true;
-        processBtn.style.opacity = '0.5';
-        processBtn.style.cursor = 'not-allowed';
-        intensitySlider.disabled = true;
-        intensitySlider.style.opacity = '0.5';
-        intensitySlider.style.cursor = 'not-allowed';
+        if (progressContainer) progressContainer.classList.remove('d-none');
 
-        progressContainer.classList.remove('d-none');
+        // Simulated crawl, caps at 90%
         let progress = 0;
+        const sim = setInterval(() => {
+            progress += Math.max(0.4, (90 - progress) * 0.03);
+            if (progress > 90) progress = 90;
+            if (progressBar) progressBar.style.width = progress + '%';
+            if (progressText) progressText.textContent = Math.floor(progress) + '%';
+        }, 100);
 
-        const interval = setInterval(() => {
-            progress += increment;
-            if (progress >= 100) {
-                progress = 100;
-                clearInterval(interval);
-                progressBar.style.width = '100%';
-                progressText.textContent = '100%';
-                setTimeout(() => {
-                    window.location.href = `/process?mode=${mode}&intensity=${intensity}`;
-                }, 500);
-            } else {
-                progressBar.style.width = `${progress}%`;
-                progressText.textContent = `${Math.floor(progress)}%`;
+        const qs = `mode=${mode}&intensity=${intensityInput.value}`;
+        try {
+            // Send params in query AND body; try POST first, fall back to GET
+            let res = await fetch(`/process?${qs}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: qs
+            });
+            if (res.status === 405) {
+                res = await fetch(`/process?${qs}`);
             }
-        }, intervalTime);
-    }
+
+            clearInterval(sim);
+            if (progressBar) progressBar.style.width = '100%';
+            if (progressText) progressText.textContent = '100%';
+
+            // Go wherever the server ended up (result page on success)
+            setTimeout(() => { window.location.href = res.url; }, 400);
+        } catch (e) {
+            clearInterval(sim);
+            processBtn.disabled = false;
+            if (progressText) progressText.textContent = 'Error, try again';
+        }
+    });
+});
 </script>
 {% endblock %}

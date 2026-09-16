@@ -16,15 +16,10 @@
             <a href="{{ url_for('download', filename=filename) }}" class="btn btn-download-active btn-lg px-5">
                 Download WAV
             </a>
-            <a href="#" class="btn btn-download-inactive btn-lg px-5">
-                Download MP3
-            </a>
+           
             {% else %}
             <a href="{{ url_for('download', filename=filename) }}" class="btn btn-download-active btn-lg px-5">
                 Download MP3
-            </a>
-            <a href="#" class="btn btn-download-inactive btn-lg px-5">
-                Download WAV
             </a>
             {% endif %}
             <a href="/" class="btn btn-outline-light btn-lg px-5">Start Over</a>

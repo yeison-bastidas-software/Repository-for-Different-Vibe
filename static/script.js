@@ -1,11 +1,20 @@
-// Update file name display on upload
+// Update file name display and validate size before upload
 function updateFileName(input) {
-    const fileName = input.files[0]?.name;
+    const file = input.files[0];
     const display = document.getElementById('file-name-display');
-    if (fileName) {
-        display.textContent = fileName;
-        display.classList.add('text-success');
+    if (!file || !display) return;
+
+    const maxBytes = 480 * 1024 * 1024;
+    if (file.size > maxBytes) {
+        display.textContent = 'File too large (max 480 MB)';
+        display.classList.remove('text-success');
+        display.classList.add('text-danger');
+        input.value = '';
+        return;
     }
+
+    display.textContent = file.name;
+    display.classList.add('text-success');
 }
 
 document.addEventListener('DOMContentLoaded', () => {

@@ -31,6 +31,10 @@ build/
 .DS_Store
 Thumbs.db
 
+# User uploads and processed audio
+uploads/
+static/processed/
+
 # IDE
 .vscode/
 .idea/

@@ -8,6 +8,12 @@
         <h1 class="display-4 brand-text mb-4">Different Vibe</h1>
         <p class="lead text-muted mb-5">Transform your audio. Slowed or Speed up.</p>
 
+        {% if request.args.get('error') == 'size' %}
+        <div class="alert alert-size text-center mt-3">
+            File too large. Maximum size is 480 MB.
+        </div>
+        {% endif %}
+
         <form action="/" method="post" enctype="multipart/form-data" class="mb-5">
             <div class="mb-4">
                 <label for="audio-upload" class="btn btn-outline-light btn-lg px-5 w-100 upload-btn">Select Audio File</label>

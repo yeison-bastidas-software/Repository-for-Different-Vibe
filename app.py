@@ -6,10 +6,10 @@ from helpers import process_audio
 
 app = Flask(__name__)
 
-app.config["SECRET_KEY"] = "diferente-vibra-secret-key-2026"
+app.config["SECRET_KEY"] = os.urandom(32).hex()
 app.config["UPLOAD_FOLDER"] = "uploads"
 app.config["PROCESSED_FOLDER"] = "static/processed"
-app.config["MAX_CONTENT_LENGTH"] = 16 * 1024 * 1024
+app.config["MAX_CONTENT_LENGTH"] = 480 * 1024 * 1024
 
 os.makedirs(app.config["UPLOAD_FOLDER"], exist_ok=True)
 os.makedirs(app.config["PROCESSED_FOLDER"], exist_ok=True)
@@ -100,3 +100,11 @@ def result():
 @app.route("/download/<filename>")
 def download(filename):
     return send_from_directory(app.config["PROCESSED_FOLDER"], filename, as_attachment=True)
+
+@app.errorhandler(413)
+def file_too_large(e):
+    # Redirect home with error flag instead of white error page
+    return redirect(url_for("index", error="size"))
+
+if __name__ == "__main__":
+    app.run(debug=True, host="0.0.0.0", port=5000)
