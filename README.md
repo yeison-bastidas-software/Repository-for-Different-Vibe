@@ -18,7 +18,6 @@ and WAV files, with adjustable intensity and an in-browser preview and download 
 - [API Reference](#api-reference)
 - [Key Design Decisions and Challenges](#key-design-decisions-and-challenges)
 - [Limitations and Future Improvements](#limitations-and-future-improvements)
-- [Author](#author)
 
 ---
 
@@ -267,9 +266,3 @@ Acknowledged limitations of the current version:
 Planned enhancements: pitch-preservation option (time stretch without pitch shift), a "reverb" layer to complete the classic slowed + reverb sound, batch processing, and optional account-based history.
 
 ---
-
-## Author
-
-**Yeison Bastidas** — Software developer.
-
-- Email: yeisonbastidassoftware@gmail.com
